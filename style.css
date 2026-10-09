@@ -18,7 +18,7 @@ nav{display:flex;gap:6px}nav a{padding:8px 14px;text-decoration:none;color:var(-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px}.grid.two{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .card{display:flex;flex-direction:column;gap:4px}.card p{margin:0 0 6px;flex:1}.card a{font-weight:600}
 .box{background:#fff;border-left:4px solid var(--gold);padding:20px 22px}.box p{margin:0}
-.ph{position:relative;aspect-ratio:3/2;background:repeating-linear-gradient(135deg,#7a4d2c 0 10px,#6B4226 10px 20px);border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#f1e8dc;font:500 1.1rem Fraunces,serif;text-align:center;padding:16px;margin-bottom:12px}
+.ph{position:relative;aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#7a4d2c 0 10px,#6B4226 10px 20px);border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#f1e8dc;font:500 1.1rem Fraunces,serif;text-align:center;padding:16px;margin-bottom:12px}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ph.big{margin:0}
 .pagehead{background:var(--tan);padding:44px 0 28px;border-bottom:1px solid #e0d3c0}.pagehead p{margin:0}.crumb{font-size:.9rem;margin-bottom:8px!important}
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
@@ -35,7 +35,7 @@ footer{background:var(--deep);color:#e9e2d2;padding-top:40px}footer a{color:#e9e
 .hgrid,.pgrid,.cgrid,.fgrid{grid-template-columns:1fr}.herologo{width:240px;order:-1}.top .wrap{justify-content:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .gallery{position:relative}.gallery .ph.big{margin:0}
-.gal{position:relative;border-radius:6px;overflow:hidden;background:#000;aspect-ratio:3/2;touch-action:pan-y}
+.gal{position:relative;border-radius:6px;overflow:hidden;background:#000;aspect-ratio:4/3;touch-action:pan-y}
 .gal .track{display:flex;height:100%;transition:transform .5s ease}.gal .sl{min-width:100%;height:100%}.gal .sl img{width:100%;height:100%;object-fit:cover;display:block}
 .gal button,.hctl button{background:rgba(31,58,26,.85);color:#fff;border:0;width:42px;height:42px;border-radius:50%;font-size:26px;line-height:1;cursor:pointer}
 .gal button:hover,.hctl button:hover{background:var(--gold)}.gal .prev,.gal .next{position:absolute;top:50%;transform:translateY(-50%)}.gal .prev{left:10px}.gal .next{right:10px}
@@ -47,3 +47,17 @@ footer{background:var(--deep);color:#e9e2d2;padding-top:40px}footer a{color:#e9e
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @media(max-width:820px){.hslide.on{grid-template-columns:1fr;gap:16px}}
 @media(prefers-reduced-motion:reduce){.gal .track{transition:none}.hslide.on{animation:none}}
+/* image backgrounds */
+.hero{position:relative;background:#1f3a1a;color:#fff;padding:88px 0}
+.hbg{position:absolute;inset:0;overflow:hidden}
+.hbg i{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;animation:bgfade 30s infinite}
+.hbg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,40,16,.9),rgba(20,40,16,.5))}
+.hbg i:first-child{opacity:1}
+@keyframes bgfade{0%{opacity:0}4%{opacity:1}20%{opacity:1}24%{opacity:0}100%{opacity:0}}
+.hero .wrap{position:relative;z-index:1}.hero h1{color:#fff}
+.hero .btn.ghost{color:#fff;border-color:#fff}.hero .btn.ghost:hover{background:#fff;color:var(--deep)}
+.herologo{border-radius:50%;background:#fff;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.pagehead{background-size:cover;background-position:center;color:#fff;padding:76px 0 48px;border-bottom:3px solid var(--gold)}
+.pagehead h1,.pagehead a{color:#fff}
+.cta{background:linear-gradient(rgba(107,66,38,.9),rgba(45,28,14,.9)),url(images/coir-pots-basket-liners-2.jpg) center/cover}
+@media(prefers-reduced-motion:reduce){.hbg i{animation:none}.hbg i:not(:first-child){display:none}}
