@@ -34,3 +34,16 @@ footer{background:var(--deep);color:#e9e2d2;padding-top:40px}footer a{color:#e9e
 @media(max-width:820px){.burger{display:block}nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:8px 20px 16px;border-bottom:3px solid var(--gold)}nav.open{display:flex}
 .hgrid,.pgrid,.cgrid,.fgrid{grid-template-columns:1fr}.herologo{width:240px;order:-1}.top .wrap{justify-content:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.gallery{position:relative}.gallery .ph.big{margin:0}
+.gal{position:relative;border-radius:6px;overflow:hidden;background:#000;aspect-ratio:4/3;touch-action:pan-y}
+.gal .track{display:flex;height:100%;transition:transform .5s ease}.gal .sl{min-width:100%;height:100%}.gal .sl img{width:100%;height:100%;object-fit:cover;display:block}
+.gal button,.hctl button{background:rgba(31,58,26,.85);color:#fff;border:0;width:42px;height:42px;border-radius:50%;font-size:26px;line-height:1;cursor:pointer}
+.gal button:hover,.hctl button:hover{background:var(--gold)}.gal .prev,.gal .next{position:absolute;top:50%;transform:translateY(-50%)}.gal .prev{left:10px}.gal .next{right:10px}
+.dots{display:flex;gap:8px;justify-content:center}.gal .dots{position:absolute;left:0;right:0;bottom:10px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#fff8;cursor:pointer;display:block}.dots i.on{background:var(--gold)}.hctl .dots i{background:#c9b99f}.hctl .dots i.on{background:var(--green)}
+.thumbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.thumbs img{width:72px;height:54px;object-fit:cover;border-radius:4px;cursor:pointer;opacity:.6;border:2px solid transparent}.thumbs img.on{opacity:1;border-color:var(--gold)}
+.feat{background:#fff;padding:20px 0 56px;border-bottom:1px solid #eadfcd}.hslide{display:none;grid-template-columns:1fr 1fr;gap:40px;align-items:center}.hslide.on{display:grid;animation:fade .6s}
+.hslide .ph{margin:0}.htext .lead{font:500 1.15rem Fraunces,serif;color:var(--brown)}.hctl{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:24px}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(max-width:820px){.hslide.on{grid-template-columns:1fr;gap:16px}}
+@media(prefers-reduced-motion:reduce){.gal .track{transition:none}.hslide.on{animation:none}}
