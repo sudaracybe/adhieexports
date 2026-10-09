@@ -26,4 +26,19 @@ dots(dd,ims.length,function(k){go(k);rs()});go(0);
 box.querySelector('.prev').onclick=function(){go(i-1);rs()};box.querySelector('.next').onclick=function(){go(i+1);rs()};
 var x=null;box.ontouchstart=function(e){x=e.touches[0].clientX};box.ontouchend=function(e){if(x===null)return;var d=e.changedTouches[0].clientX-x;if(Math.abs(d)>40){go(i+(d<0?1:-1));rs()}x=null};
 function rs(){clearInterval(t);if(!reduce)t=setInterval(function(){go(i+1)},5000)}rs()}}
+
+/* Hero: load the extra background photos after the page has loaded */
+window.addEventListener('load',function(){[].forEach.call(document.querySelectorAll('.hbg i[data-bg]'),function(i){i.style.backgroundImage='url('+i.dataset.bg+')'})});
+/* Contact form: sends via Web3Forms; falls back to the visitor's email app if no key is set */
+var f=document.getElementById('f');
+if(f){f.addEventListener('submit',function(ev){ev.preventDefault();
+var st=document.getElementById('fs'),b=f.querySelector('button[type=submit]'),d=new FormData(f),key=d.get('access_key')||'';
+if(d.get('botcheck'))return;
+if(!key||key.indexOf('YOUR_')===0){var body='';d.forEach(function(v,k){if(['access_key','subject','from_name','botcheck'].indexOf(k)<0&&v)body+=k.replace('_',' ')+': '+v+'\n'});
+location.href='mailto:info@adhieexports.com?subject='+encodeURIComponent('Website enquiry: '+d.get('product'))+'&body='+encodeURIComponent(body);return}
+b.disabled=true;st.textContent='Sending...';
+fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r){return r.json()}).then(function(j){
+if(!j.success)throw new Error();f.reset();st.textContent='Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
+.catch(function(){st.textContent='Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
+.then(function(){b.disabled=false})})}
 })();

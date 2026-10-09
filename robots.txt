@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://adhieexports.com/sitemap.xml

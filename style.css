@@ -61,3 +61,7 @@ footer{background:var(--deep);color:#e9e2d2;padding-top:40px}footer a{color:#e9e
 .pagehead h1,.pagehead a{color:#fff}
 .cta{background:linear-gradient(rgba(107,66,38,.9),rgba(45,28,14,.9)),url(images/coir-pots-basket-liners-2.jpg) center/cover}
 @media(prefers-reduced-motion:reduce){.hbg i{animation:none}.hbg i:not(:first-child){display:none}}
+.steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;position:relative;padding:10px 0 10px 54px;border-left:2px solid var(--gold);margin-left:16px}
+.steps li:before{content:counter(s);position:absolute;left:-17px;top:8px;width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:600}
+.steps li{padding-left:28px}.steps li:before{left:-17px}
+#fs{min-height:1.4em;font-weight:600;color:var(--green)}
