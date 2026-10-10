@@ -41,4 +41,18 @@ fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r
 if(!j.success)throw new Error();f.reset();st.textContent='Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
 .catch(function(){st.textContent='Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
 .then(function(){b.disabled=false})})}
+
+/* Email button: a mailto link does nothing on computers without a mail app, so offer Gmail, Outlook, mail app and copy */
+var eb=document.querySelector('.em');
+if(eb){var ADDR='info@adhieexports.com',SUB=encodeURIComponent('Enquiry from adhieexports.com'),pop=document.createElement('div');pop.className='empop';pop.hidden=true;
+pop.innerHTML='<b>Email us</b><span>'+ADDR+'</span>'
++'<a target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to='+ADDR+'&su='+SUB+'">Open in Gmail</a>'
++'<a target="_blank" rel="noopener" href="https://outlook.live.com/mail/0/deeplink/compose?to='+ADDR+'&subject='+SUB+'">Open in Outlook</a>'
++'<a href="mailto:'+ADDR+'?subject='+SUB+'">Open my email app</a><button type="button">Copy email address</button>';
+document.body.appendChild(pop);var cp=pop.querySelector('button');
+eb.addEventListener('click',function(ev){ev.preventDefault();pop.hidden=!pop.hidden});
+cp.addEventListener('click',function(){function ok(){cp.textContent='Copied!';setTimeout(function(){cp.textContent='Copy email address'},1800)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ADDR).then(ok,function(){window.prompt('Copy this address:',ADDR)})}else{window.prompt('Copy this address:',ADDR)}});
+document.addEventListener('click',function(ev){if(!pop.hidden&&!pop.contains(ev.target)&&!eb.contains(ev.target))pop.hidden=true});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')pop.hidden=true})}
 })();
