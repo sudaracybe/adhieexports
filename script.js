@@ -14,7 +14,7 @@ hs.onmouseenter=function(){clearInterval(t)};hs.onmouseleave=rs}
 var g=document.querySelector('.gallery');
 if(g){var slug=g.dataset.slug,found=[],left=8;
 for(var n=1;n<=8;n++){(function(n){var im=new Image();im.alt=slug.replace(/-/g,' ')+' photo '+n;
-im.onload=function(){found[n]=im;done()};im.onerror=function(){done()};im.src='images/'+slug+'-'+n+'.jpg'})(n)}
+im.onload=function(){found[n]=im;done()};im.onerror=function(){done()};im.src='/images/'+slug+'-'+n+'.jpg'})(n)}
 function done(){if(--left)return;var ims=found.filter(Boolean);if(!ims.length)return;
 var box=document.createElement('div');box.className='gal';var tr=document.createElement('div');tr.className='track';
 ims.forEach(function(im){var s=document.createElement('div');s.className='sl';s.appendChild(im);tr.appendChild(s)});box.appendChild(tr);
@@ -38,8 +38,8 @@ if(!key||key.indexOf('YOUR_')===0){var body='';d.forEach(function(v,k){if(['acce
 location.href='mailto:info@adhieexports.com?subject='+encodeURIComponent('Website enquiry: '+d.get('product'))+'&body='+encodeURIComponent(body);return}
 b.disabled=true;st.textContent='Sending...';
 fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r){return r.json()}).then(function(j){
-if(!j.success)throw new Error();f.reset();st.textContent='Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
-.catch(function(){st.textContent='Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
+if(!j.success)throw new Error();f.reset();st.textContent=f.dataset.ok||'Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
+.catch(function(){st.textContent=f.dataset.err||'Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
 .then(function(){b.disabled=false})})}
 
 /* Email button: a mailto link does nothing on computers without a mail app, so offer Gmail, Outlook, mail app and copy */

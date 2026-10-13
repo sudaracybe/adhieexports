@@ -87,3 +87,4 @@ details{background:#fff;border-left:4px solid var(--gold);margin:0 0 12px;paddin
 .empop b{color:var(--deep);font-family:Fraunces,Georgia,serif;font-size:1.1rem}.empop span{font-size:.9rem;color:var(--brown);word-break:break-all}
 .empop a,.empop button{display:block;text-align:center;padding:10px 12px;border-radius:8px;border:1px solid var(--green);background:#fff;color:var(--green);font:600 .95rem Figtree,sans-serif;text-decoration:none;cursor:pointer}
 .empop a:hover,.empop button:hover{background:var(--green);color:#fff}
+.lang{background:#2c4a26;color:#fff;border:1px solid #5a7a52;border-radius:6px;padding:3px 8px;font:inherit;cursor:pointer}.lang option{color:#000}

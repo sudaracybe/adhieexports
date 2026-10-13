@@ -5,7 +5,7 @@ function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!==und
 var btn=el('button','chatbtn');btn.type='button';btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-controls','chatpanel');
 btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Ask AI</span>';
 var p=el('div','chatpanel');p.id='chatpanel';p.setAttribute('role','dialog');p.setAttribute('aria-label','Adhie Exports chat assistant');p.hidden=true;
-var hd=el('div','chathd');var im=new Image();im.src='logo-sm.png';im.alt='';im.width=32;im.height=32;
+var hd=el('div','chathd');var im=new Image();im.src='/logo-sm.png';im.alt='';im.width=32;im.height=32;
 var tt=el('div','chattt');tt.appendChild(el('b','','Adhie Assistant'));tt.appendChild(el('small','','AI assistant for Adhie Exports'));
 var x=el('button','chatx','\u00d7');x.type='button';x.setAttribute('aria-label','Close chat');hd.append(im,tt,x);
 var log=el('div','chatlog');log.setAttribute('aria-live','polite');
