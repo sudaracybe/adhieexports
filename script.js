@@ -38,7 +38,7 @@ if(!key||key.indexOf('YOUR_')===0){var body='';d.forEach(function(v,k){if(['acce
 location.href='mailto:info@adhieexports.com?subject='+encodeURIComponent('Website enquiry: '+d.get('product'))+'&body='+encodeURIComponent(body);return}
 b.disabled=true;st.textContent='Sending...';
 fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r){return r.json()}).then(function(j){
-if(!j.success)throw new Error();f.reset();st.textContent=f.dataset.ok||'Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
+if(!j.success)throw new Error();track('generate_lead',{form:'contact'});f.reset();st.textContent=f.dataset.ok||'Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
 .catch(function(){st.textContent=f.dataset.err||'Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
 .then(function(){b.disabled=false})})}
 
@@ -55,4 +55,16 @@ cp.addEventListener('click',function(){function ok(){cp.textContent='Copied!';se
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ADDR).then(ok,function(){window.prompt('Copy this address:',ADDR)})}else{window.prompt('Copy this address:',ADDR)}});
 document.addEventListener('click',function(ev){if(!pop.hidden&&!pop.contains(ev.target)&&!eb.contains(ev.target))pop.hidden=true});
 document.addEventListener('keydown',function(ev){if(ev.key==='Escape')pop.hidden=true})}
+
+/* Prefill the enquiry form from product buttons; track key actions (Google Analytics 4 when an ID is set in analytics-config.js) */
+var qs=new URLSearchParams(location.search),ff=document.getElementById('f');
+if(ff){var ty=qs.get('type'),pr=qs.get('product'),sl=ff.querySelector('select[name=product]'),pn='';
+if(sl&&pr){[].forEach.call(sl.options,function(o){if(o.dataset.slug===pr){sl.value=o.value;pn=o.value}})}
+var it=ff.querySelector('input[name=inquiry_type]');if(it&&(ty==='samples'||ty==='wholesale'))it.value=ty==='samples'?'Request samples':'Request wholesale pricing';
+var ta=ff.querySelector('textarea'),tp=ty==='samples'?ff.dataset.msamples:ty==='wholesale'?ff.dataset.mwholesale:'';if(ta&&tp&&!ta.value)ta.value=tp.replace('[product]',pn)}
+var GA=window.ADHIE_GA4;
+function track(n,p){if(window.gtag){try{window.gtag('event',n,p||{})}catch(e){}}}
+if(GA){window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments)};var gs=document.createElement('script');gs.async=true;gs.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(gs);window.gtag('js',new Date());window.gtag('config',GA)}
+document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';
+if(h.indexOf('wa.me')>-1)track('whatsapp_click',{link_url:h});else if(h.indexOf('mailto:')===0)track('email_click');else if(/\.pdf(\?|$)/i.test(h))track('file_download',{file_name:h.split('/').pop()});else if(/[?&]type=(samples|wholesale)/.test(h))track('request_button_click',{request_type:h.match(/type=(\w+)/)[1]})});
 })();

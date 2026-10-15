@@ -96,3 +96,4 @@ details{background:#fff;border-left:4px solid var(--gold);margin:0 0 12px;paddin
 [dir=rtl] .strip li{border-left:0;border-right:3px solid var(--gold);padding-left:0;padding-right:14px}
 [dir=rtl] .hbg::after{background:linear-gradient(270deg,rgba(20,40,16,.9),rgba(20,40,16,.5))}
 .gal,.gallery{direction:ltr}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.btn.alt{background:#fff;color:var(--green)}.btn.alt:hover{background:var(--green);color:#fff}figure.card{margin:0}figure.card img{width:100%;border-radius:6px}figcaption{font-size:.9rem;color:var(--brown)}
