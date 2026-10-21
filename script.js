@@ -38,7 +38,7 @@ if(!key||key.indexOf('YOUR_')===0){var body='';d.forEach(function(v,k){if(['acce
 location.href='mailto:info@adhieexports.com?subject='+encodeURIComponent('Website enquiry: '+d.get('product'))+'&body='+encodeURIComponent(body);return}
 b.disabled=true;st.textContent='Sending...';
 fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r){return r.json()}).then(function(j){
-if(!j.success)throw new Error();track('generate_lead',{form:'contact'});f.reset();st.textContent=f.dataset.ok||'Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
+if(!j.success)throw new Error();track('generate_lead',{form:'contact'});clearQuote();f.reset();st.textContent=f.dataset.ok||'Thank you! Your enquiry has been sent. We will reply within 1-2 business days.'})
 .catch(function(){st.textContent=f.dataset.err||'Sorry, it could not be sent. Please email info@adhieexports.com or WhatsApp +94 77 454 2610.'})
 .then(function(){b.disabled=false})})}
 
@@ -67,4 +67,22 @@ function track(n,p){if(window.gtag){try{window.gtag('event',n,p||{})}catch(e){}}
 if(GA){window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments)};var gs=document.createElement('script');gs.async=true;gs.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(gs);window.gtag('js',new Date());window.gtag('config',GA)}
 document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';
 if(h.indexOf('wa.me')>-1)track('whatsapp_click',{link_url:h});else if(h.indexOf('mailto:')===0)track('email_click');else if(/\.pdf(\?|$)/i.test(h))track('file_download',{file_name:h.split('/').pop()});else if(/[?&]type=(samples|wholesale)/.test(h))track('request_button_click',{request_type:h.match(/type=(\w+)/)[1]})});
+
+/* Quote list (RFQ basket): saved in this browser, sent with the enquiry form */
+var QK='adhieQuote';
+function qget(){try{return JSON.parse(localStorage.getItem(QK)||'[]')}catch(e){return[]}}
+function qset(a){try{localStorage.setItem(QK,JSON.stringify(a))}catch(e){}qbadge()}
+function clearQuote(){try{localStorage.removeItem(QK)}catch(e){}qbadge();qrender()}
+function qbadge(){var n=qget().length;[].forEach.call(document.querySelectorAll('.qlink'),function(a){a.hidden=!n;var s=a.querySelector('span');if(s)s.textContent=n})}
+[].forEach.call(document.querySelectorAll('[data-quote]'),function(b){var lab=b.textContent;
+function mark(){var on=qget().some(function(x){return x.s===b.dataset.quote});b.textContent=on?(b.dataset.added||lab):lab}
+mark();b.addEventListener('click',function(){var a=qget();if(!a.some(function(x){return x.s===b.dataset.quote}))a.push({s:b.dataset.quote,n:b.dataset.name,e:b.dataset.en,q:''});qset(a);mark();track('add_to_quote',{item:b.dataset.en})})});
+var qb=document.getElementById('quote');
+function qsync(){if(!ff)return;var h=ff.querySelector('input[name=quote_items]');if(h)h.value=qget().map(function(x){return x.e+(x.q?' - Quantity: '+x.q:'')}).join('\n')}
+function qrender(){if(!qb)return;var a=qget();qb.hidden=!a.length;qb.innerHTML='';if(!a.length){qsync();return}
+var t=document.createElement('b');t.textContent=qb.dataset.title;qb.appendChild(t);
+a.forEach(function(x,i){var r=document.createElement('div');r.className='qrow';var n=document.createElement('b');n.textContent=x.n;var q=document.createElement('input');q.type='text';q.maxLength=60;q.placeholder=qb.dataset.qty;q.value=x.q||'';q.setAttribute('aria-label',x.n);
+q.addEventListener('input',function(){var l=qget();if(l[i]){l[i].q=q.value;try{localStorage.setItem(QK,JSON.stringify(l))}catch(e){}}qsync()});
+var d=document.createElement('button');d.type='button';d.textContent=qb.dataset.remove;d.addEventListener('click',function(){var l=qget();l.splice(i,1);qset(l);qrender()});r.append(n,q,d);qb.appendChild(r)});qsync()}
+qbadge();qrender();
 })();
