@@ -64,7 +64,28 @@ var it=ff.querySelector('input[name=inquiry_type]');if(it&&(ty==='samples'||ty==
 var ta=ff.querySelector('textarea'),tp=ty==='samples'?ff.dataset.msamples:ty==='wholesale'?ff.dataset.mwholesale:'';if(ta&&tp&&!ta.value)ta.value=tp.replace('[product]',pn)}
 var GA=window.ADHIE_GA4;
 function track(n,p){if(window.gtag){try{window.gtag('event',n,p||{})}catch(e){}}}
-if(GA){window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments)};var gs=document.createElement('script');gs.async=true;gs.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(gs);window.gtag('js',new Date());window.gtag('config',GA)}
+/* Cookie consent: Google Analytics loads only after the visitor accepts */
+var CK='adhieConsent',gaOn=false;
+function cget(){try{return localStorage.getItem(CK)}catch(e){return null}}
+function cset(v){try{localStorage.setItem(CK,v)}catch(e){}}
+function loadGA(){if(gaOn||!GA)return;gaOn=true;window['ga-disable-'+GA]=false;window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments)};var gs=document.createElement('script');gs.async=true;gs.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(gs);window.gtag('js',new Date());window.gtag('config',GA)}
+function clearGA(){window['ga-disable-'+GA]=true;window.gtag=undefined;document.cookie.split(';').forEach(function(c){var k=c.split('=')[0].trim();if(k.indexOf('_ga')===0){var h=location.hostname.split('.');['',h.join('.'),'.'+h.slice(-2).join('.')].forEach(function(d){document.cookie=k+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}
+var CT={en:['We use cookies to measure visits and clicks on this website (Google Analytics). You can accept or decline.','Accept','Decline','Privacy policy','Cookie settings'],
+es:['Usamos cookies para medir las visitas y los clics en este sitio web (Google Analytics). Puede aceptarlas o rechazarlas.','Aceptar','Rechazar','Política de privacidad','Configuración de cookies'],
+ar:['نستخدم ملفات تعريف الارتباط لقياس الزيارات والنقرات على هذا الموقع (Google Analytics). يمكنك القبول أو الرفض.','قبول','رفض','سياسة الخصوصية','إعدادات ملفات تعريف الارتباط'],
+fr:['Nous utilisons des cookies pour mesurer les visites et les clics sur ce site (Google Analytics). Vous pouvez les accepter ou les refuser.','Accepter','Refuser','Politique de confidentialité','Paramètres des cookies'],
+de:['Wir verwenden Cookies, um Besuche und Klicks auf dieser Website zu messen (Google Analytics). Sie können sie akzeptieren oder ablehnen.','Akzeptieren','Ablehnen','Datenschutzerklärung','Cookie-Einstellungen'],
+nl:['Wij gebruiken cookies om bezoeken en klikken op deze website te meten (Google Analytics). U kunt ze accepteren of weigeren.','Accepteren','Weigeren','Privacybeleid','Cookie-instellingen'],
+zh:['我们使用Cookie来统计本网站的访问量和点击（Google Analytics）。您可以接受或拒绝。','接受','拒绝','隐私政策','Cookie设置']};
+function cl(){return CT[(document.documentElement.lang||'en').slice(0,2)]||CT.en}
+function showBanner(){var old=document.querySelector('.cookiebar');if(old)old.remove();var L=cl();
+var b=document.createElement('div');b.className='cookiebar';b.setAttribute('role','dialog');b.setAttribute('aria-label','Cookies');
+var p=document.createElement('p');p.appendChild(document.createTextNode(L[0]+' '));var a=document.createElement('a');a.href='/privacy.html';a.textContent=L[3];p.appendChild(a);
+var y=document.createElement('button');y.type='button';y.className='btn';y.textContent=L[1];var n=document.createElement('button');n.type='button';n.className='btn ghost';n.textContent=L[2];
+y.addEventListener('click',function(){cset('granted');loadGA();b.remove()});n.addEventListener('click',function(){cset('denied');clearGA();b.remove()});
+b.append(p,y,n);document.body.appendChild(b)}
+if(GA){var cs=cget();if(cs==='granted')loadGA();else if(!cs)showBanner();
+var cp=document.querySelector('.copy');if(cp){cp.appendChild(document.createTextNode(' | '));var cl2=document.createElement('a');cl2.href='#';cl2.textContent=cl()[4];cl2.addEventListener('click',function(ev){ev.preventDefault();showBanner()});cp.appendChild(cl2)}}
 document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';
 if(h.indexOf('wa.me')>-1)track('whatsapp_click',{link_url:h});else if(h.indexOf('mailto:')===0)track('email_click');else if(/\.pdf(\?|$)/i.test(h))track('file_download',{file_name:h.split('/').pop()});else if(/[?&]type=(samples|wholesale)/.test(h))track('request_button_click',{request_type:h.match(/type=(\w+)/)[1]})});
 
